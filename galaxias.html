@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explorador Galáctico Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Outfit:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #02040a;
+            --font-main: 'Outfit', sans-serif;
+            --font-header: 'Orbitron', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--bg-dark);
+            color: white;
+            font-family: var(--font-main);
+            overflow-x: hidden;
+        }
+
+        /* --- FONDO DE ESTRELLAS ANIMADO --- */
+        .space-background {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+            z-index: -1;
+        }
+
+        .stars {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/stardust.png');
+            animation: moveStars 100s linear infinite;
+        }
+
+        @keyframes moveStars {
+            from { background-position: 0 0; }
+            to { background-position: 1000px 1000px; }
+        }
+
+        /* --- CABECERA ESTILO HUD --- */
+        .hud-header {
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+            border-bottom: 2px solid rgba(0, 242, 255, 0.2);
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .scanner-line {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 2px;
+            background: #00f2ff;
+            box-shadow: 0 0 15px #00f2ff;
+            animation: scan 4s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { top: 0; opacity: 0; }
+            50% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+
+        .hud-header h1 {
+            font-family: var(--font-header);
+            font-size: clamp(1.5rem, 5vw, 3rem);
+            letter-spacing: 5px;
+            margin: 10px 0;
+        }
+
+        .glow {
+            color: #00f2ff;
+            text-shadow: 0 0 20px #00f2ff;
+        }
+
+        /* --- TARJETAS HOLOGRÁFICAS --- */
+        .galaxy-grid {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 0 20px 100px; /* Espacio extra abajo para el botón */
+        }
+
+        .holo-card {
+            position: relative;
+            margin-bottom: 60px;
+            padding: 3px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, var(--color), transparent);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .card-inner {
+            background: rgba(10, 15, 25, 0.9);
+            backdrop-filter: blur(15px);
+            border-radius: 18px;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .holo-card:hover {
+            transform: perspective(1000px) rotateX(5deg) scale(1.02);
+            box-shadow: 0 0 40px var(--color);
+        }
+
+        /* Caja de Imagen mejorada */
+        .image-box {
+            flex: 0 0 350px;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-right: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+            transition: 0.5s;
+        }
+
+        .holo-card:hover .image-box img {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        /* Información */
+        .info-box {
+            padding: 40px;
+        }
+
+        .data-header {
+            font-family: var(--font-header);
+            color: var(--color);
+            font-size: 0.7rem;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .info-box h2 {
+            font-size: 1.8rem;
+            margin: 0 0 15px 0;
+            text-transform: uppercase;
+            font-family: var(--font-header);
+        }
+
+        .info-box p {
+            font-size: 1rem;
+            color: #a0a0c0;
+            line-height: 1.6;
+        }
+
+        .scan-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 25px;
+            border: 1px solid var(--color);
+            color: var(--color);
+            font-family: var(--font-header);
+            font-size: 0.7rem;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        /* Botón Circular Flotante */
+        .floating-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
+            background: #00f2ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #000;
+            text-decoration: none;
+            box-shadow: 0 0 20px #00f2ff;
+            z-index: 100;
+            animation: pulse 2s infinite;
+            border: none;
+            cursor: pointer;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 242, 255, 0.7); }
+            70% { transform: scale(1.1); box-shadow: 0 0 0 20px rgba(0, 242, 255, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 242, 255, 0); }
+        }
+
+        @media (max-width: 768px) {
+            .card-inner { flex-direction: column; }
+            .image-box { flex: 0 0 250px; width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="space-background">
+        <div class="stars"></div>
+    </div>
+
+    <main class="viewport">
+        <header class="hud-header">
+            <div class="scanner-line"></div>
+            <p class="status">● Explorando las Galaxias</p>
+            <h1>ARCHIVOS <span class="glow">COSMOS</span></h1>
+            <div class="stats-bar">
+                <span>SECTOR: UNIVERSO CONOCIDO</span>
+            </div>
+        </header>
+
+        <section class="galaxy-grid">
+            
+            <div class="holo-card" style="--color: #00f2ff;">
+                <div class="card-inner">
+                    <div class="image-box">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c5/M101_hires_STScI-PRC2006-10a.jpg" alt="M101">
+                    </div>
+                    <div class="info-box">
+                        <div class="data-header">SISTEMA: MESSIER 101</div>
+                        <h2>EL MOLINILLO</h2>
+                        <p>¡Es un remolino gigante! Tiene el doble de estrellas que nuestra galaxia. Si viajaras a la velocidad de la luz, tardarías 170,000 años en cruzarla de lado a lado.</p>
+                        <div class="scan-button"><a href="https://observatorio.info/2003/03/m101-la-galaxia-molinillo/"> DETALLES COMPLETOS </a></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="holo-card" style="--color: #bd00ff;">
+                <div class="card-inner">
+                    <div class="image-box">
+                        <img src="data:image/jpeg;base64,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"> </div>
+                    <div class="info-box">
+                        <div class="data-header">SISTEMA: MESSIER 104</div>
+                        <h2>EL SOMBRERO</h2>
+                        <p>Parece un platillo volador con un anillo oscuro de polvo alrededor. Es tan brillante que puedes verla con un telescopio pequeño desde tu jardín.</p>
+                        <div class="scan-button"><a href="https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-messier-catalog/messier-104/">DETALLES COMPLETOS</a></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="holo-card" style="--color: #ff004c;">
+                <div class="card-inner">
+                    <div class="image-box">
+                        <img src="data:image/jpeg;base64,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" alt="M82">
+                    </div>
+                    <div class="info-box">
+                        <div class="data-header">SISTEMA: MESSIER 82</div>
+                        <h2>LA CIGARRERA</h2>
+                        <p>¡Esta galaxia está "estallando"! Crea estrellas 10 veces más rápido que la Vía Láctea. Ese color rojo que ves es gas caliente saliendo disparado.</p>
+                        <div class="scan-button"><a href="https://es.wikipedia.org/wiki/Galaxia_del_Cigarro">DETALLES COMPLETOS</a></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="holo-card" style="--color: #ff9d00;">
+                <div class="card-inner">
+                    <div class="image-box">
+                        <img src="https://science.nasa.gov/wp-content/uploads/2023/04/m51-and-companion_0-jpg.webp?resize=1200,834" alt="M51">
+                    </div>
+                    <div class="info-box">
+                        <div class="data-header">SISTEMA: MESSIER 51</div>
+                        <h2>EL REMOLINO</h2>
+                        <p>¡Mira bien! Son dos galaxias chocando. La pequeña está siendo "comida" por la grande, creando esos brazos espirales tan perfectos.</p>
+                        <div class="scan-button"><a href="https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-messier-catalog/messier-51/">DETALLES COMPLETOS</a></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="holo-card" style="--color: #00ff8c;">
+                <div class="card-inner">
+                    <div class="image-box">
+                        <img src="https://thumbs.dreamstime.com/b/una-impresionante-galaxia-espiral-morada-en-el-espacio-con-estrellas-brillantes-y-belleza-c%C3%B3smica-esta-imagen-muestra-llena-de-380247972.jpg" alt="NGC 4414">
+                    </div>
+                    <div class="info-box">
+                        <div class="data-header">SISTEMA: NGC 4414</div>
+                        <h2>LA ESPIRAL DE CRISTAL</h2>
+                        <p>Es una galaxia "floculenta", lo que significa que sus brazos parecen parches de nubes de algodón. Es una de las más bellas y misteriosas.</p>
+                        <div class="scan-button"><a href="https://www.turismodeestrellas.com/comprension-estructura-espiral-de-la-via-lactea">DETALLES COMPLETOS</a></div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <button class="floating-btn" title="Despegue"><a href="index.html">🚀</a></button>
+
+</body>
+</html>

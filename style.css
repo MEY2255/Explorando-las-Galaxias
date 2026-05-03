@@ -1,0 +1,155 @@
+/* --- ESTILOS GENERALES --- */
+body {
+    color: white;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    /* Mi imagen de fondo personalizada */
+    background-image: url('imagenes/imagenes-de-galaxia-rk2cmiznwj1hk19q.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+}
+
+/* --- ENCABEZADO Y TÍTULO GIGANTE --- */
+header {
+    background: linear-gradient(to bottom, #1a1a2e, rgba(11, 13, 23, 0.8));
+    padding: 100px 20px; 
+    text-align: center;
+}
+
+h1 {
+    /* Usamos Arial Black que es súper gruesa y ya viene en la PC */
+    font-family: 'Arial Black', sans-serif;
+    font-size: 85px; /* Aquí está el tamaño grande que querías */
+    color: #a29bfe;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    margin: 0;
+    line-height: 1.1;
+    /* Efecto de brillo neón que combina con el morado */
+    text-shadow: 4px 4px 15px rgba(162, 155, 254, 0.6), 0 0 20px rgba(0, 0, 0, 0.8);
+}
+
+header p {
+    font-size: 1.4rem;
+    margin-top: 15px;
+    color: #d1d1d1;
+    font-style: italic;
+}
+
+/* --- CONTENEDOR DE LAS TARJETAS --- */
+.envoltorio-principal {
+    width: 85%;
+    max-width: 1000px;
+    margin: 40px auto;
+}
+
+.tarjeta-espacial {
+    background: rgba(0, 0, 0, 0.6); /* Fondo oscuro para que se lea bien */
+    padding: 30px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    border: 1px solid rgba(162, 155, 254, 0.2);
+    backdrop-filter: blur(8px); /* Efecto de vidrio esmerilado */
+    transition: 0.3s ease; /* Para que el efecto hover sea suave */
+}
+
+/* Detalle interactivo: la tarjeta brilla un poco al pasar el mouse */
+.tarjeta-espacial:hover {
+    border: 1px solid #4b43c0;
+    transform: translateY(-3px);
+}
+
+h2 {
+    color: #a29bfe;
+    border-bottom: 1px solid rgba(162, 155, 254, 0.3);
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+.lista-galaxias li {
+    margin-bottom: 10px;
+}
+
+footer {
+    text-align: center;
+    padding: 40px;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* --- BOTÓN CIRCULAR ESTILO ESPACIAL --- */
+button {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: rgba(162, 155, 254, 0.2); /* Morado traslúcido */
+  border: 2px solid #a29bfe;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 0 15px rgba(162, 155, 254, 0.3);
+  padding: 0;
+  margin: 20px auto; /* Centra el botón horizontalmente */
+}
+
+button:hover {
+  background-color: #a29bfe;
+  box-shadow: 0 0 25px rgba(162, 155, 254, 0.8);
+  transform: scale(1.1); /* Se hace un poco más grande al pasar el mouse */
+}
+
+/* --- ESTILO DE LOS ENLACES --- */
+a {
+  text-decoration: none;
+  color: #a29bfe; /* Color morado neón para que combine */
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+/* Ajuste específico para el enlace que está dentro del botón */
+button a {
+  color: white;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+button:hover a {
+  color: #1a1a2e; /* Cambia a oscuro cuando el botón brilla */
+}
+
+#video-fondo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Esto hace que el video llene la pantalla sin deformarse */
+    z-index: -1; /* Lo envía al fondo de todo */
+}
+
+/* Un pequeño truco para que el texto se lea mejor sobre el video */
+body {
+    margin: 0;
+    color: white; /* Letras blancas para que resalten */
+    font-family: sans-serif;
+}
+
+.tarjeta-espacial {
+    background: rgba(0, 0, 0, 0.6); /* Fondo negro semi-transparente para las tarjetas */
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+    backdrop-filter: blur(5px); /* Efecto de cristal esmerilado */
+    border: 1px solid rgba(255, 215, 0, 0.3); /* Un toque dorado sutil */
+}
